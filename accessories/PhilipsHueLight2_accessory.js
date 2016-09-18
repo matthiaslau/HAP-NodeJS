@@ -27,6 +27,9 @@ var execute = function(accessory,lightID,characteristic,value) {
 	} else if(characteristic === "on") {
 		body = {on:Boolean(value)};
 	} else if(characteristic === "hue") {
+    value = value/65535;
+    value = value*360;
+    value = Math.round(value);
 		body = {hue:value};
 	} else  if(characteristic === "brightness") {
 		value = value/100;
