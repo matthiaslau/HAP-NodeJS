@@ -25,7 +25,7 @@ var execute = function(accessory,lightID,characteristic,value) {
 	if(characteristic === "identify") {
 		body = {alert:"select"};
 	} else if(characteristic === "on") {
-		body = {on:value};
+		body = {on:Boolean(value)};
 	} else if(characteristic === "hue") {
 		body = {hue:value};
 	} else  if(characteristic === "brightness") {
@@ -46,7 +46,7 @@ var execute = function(accessory,lightID,characteristic,value) {
 	var post_options = {
 	  host: philipsHueInfo.philipsHueIP,
 	  port: '80',
-	  path: '/api/' + philipsHueInfo.philipsHueUsername + '/lights/' + lightID + '/state/',
+	  path: '/api/' + philipsHueInfo.philipsHueUsername + '/lights/' + lightID + '/state',
 	  method: 'PUT',
 	  headers: {
 	      'Content-Type': 'application/json',

@@ -10,7 +10,7 @@ var philipsHueInfo = require("./philipshueinfo.js");
 var philipsHueLightNumber = 3;  // Wohnzimmer - The number of the light in the lights responses, this is shown as '"<number>" : {'
 var philipsHueLightID = "00:17:88:01:00:fb:90:c2-0b";  //The value of the uniqueID of the light
 
-var accessoryName = "Wohnzimmer Licht"; //The name of the light
+var accessoryName = "Couch Licht"; //The name of the light
 var model = "LCT001"; //The model id of the light, this is important to properly support hue lux lights
 var serialNumber = philipsHueInfo.philipsHueManufacturer.toUpperCase() + model.toUpperCase() + '-' + philipsHueLightNumber.toString();
 
@@ -25,7 +25,7 @@ var execute = function(accessory,lightID,characteristic,value) {
 	if(characteristic === "identify") {
 		body = {alert:"select"};
 	} else if(characteristic === "on") {
-		body = {on:value};
+		body = {on:Boolean(value)};
 	} else if(characteristic === "hue") {
 		body = {hue:value};
 	} else  if(characteristic === "brightness") {
@@ -46,7 +46,7 @@ var execute = function(accessory,lightID,characteristic,value) {
 	var post_options = {
 	  host: philipsHueInfo.philipsHueIP,
 	  port: '80',
-	  path: '/api/' + philipsHueInfo.philipsHueUsername + '/lights/' + lightID + '/state/',
+	  path: '/api/' + philipsHueInfo.philipsHueUsername + '/lights/' + lightID + '/state',
 	  method: 'PUT',
 	  headers: {
 	      'Content-Type': 'application/json',

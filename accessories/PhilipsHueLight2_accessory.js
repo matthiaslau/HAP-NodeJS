@@ -7,10 +7,10 @@ var philipsHueInfo = require("./philipshueinfo.js");
 	For hue lux lights it is important to set the model to the proper model as well.
 */
 
-var philipsHueLightNumber = 2;  // Schlafzimmer - The number of the light in the lights responses, this is shown as '"<number>" : {'
+var philipsHueLightNumber = 2;  // Arbeitszimmer - The number of the light in the lights responses, this is shown as '"<number>" : {'
 var philipsHueLightID = "00:17:88:01:00:d9:01:0c-0b";  //The value of the uniqueID of the light
 
-var accessoryName = "Schlafzimmer Licht"; //The name of the light
+var accessoryName = "Arbeitszimmer Licht"; //The name of the light
 var model = "LCT001"; //The model id of the light, this is important to properly support hue lux lights
 var serialNumber = philipsHueInfo.philipsHueManufacturer.toUpperCase() + model.toUpperCase() + '-' + philipsHueLightNumber.toString();
 
@@ -25,7 +25,7 @@ var execute = function(accessory,lightID,characteristic,value) {
 	if(characteristic === "identify") {
 		body = {alert:"select"};
 	} else if(characteristic === "on") {
-		body = {on:value};
+		body = {on:Boolean(value)};
 	} else if(characteristic === "hue") {
 		body = {hue:value};
 	} else  if(characteristic === "brightness") {
@@ -46,7 +46,7 @@ var execute = function(accessory,lightID,characteristic,value) {
 	var post_options = {
 	  host: philipsHueInfo.philipsHueIP,
 	  port: '80',
-	  path: '/api/' + philipsHueInfo.philipsHueUsername + '/lights/' + lightID + '/state/',
+	  path: '/api/' + philipsHueInfo.philipsHueUsername + '/lights/' + lightID + '/state',
 	  method: 'PUT',
 	  headers: {
 	      'Content-Type': 'application/json',
